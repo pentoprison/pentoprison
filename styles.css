@@ -1,0 +1,137 @@
+/* styles.css */
+
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header Styles */
+header {
+  background-color: #4CAF50;
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+}
+
+header .logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+nav ul {
+  list-style: none;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  display: inline;
+  margin: 0 10px;
+}
+
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  margin: 40px 0;
+  font-size: 36px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #4CAF50;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  background-color: #e0e0e0;
+}
+
+/* How It Works Section Styles */
+#how-it-works {
+  padding: 50px;
+  background-color: #f1f1f1;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.steps {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.step {
+  text-align: center;
+}
+
+/* Testimonials Section Styles */
+#testimonials {
+  padding: 50px;
+  background-color: #ffffff;
+}
+
+.testimonials-slider {
+  /* Add your slider styles here */
+}
+
+.testimonial {
+  text-align: center;
+}
+
+blockquote {
+  font-size: 18px;
+  font-style: italic;
+}
+
+cite {
+  font-size: 16px;
+}
+
+/* Contact Us Section Styles */
+#contact-us {
+  padding: 50px;
+  background-color: #f1f1f1;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+input,
+textarea {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
