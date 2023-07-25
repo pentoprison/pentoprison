@@ -1,0 +1,44 @@
+<!-- register.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pen to Prison - User Registration</title>
+</head>
+<body>
+  <h2>User Registration</h2>
+  <form id="registrationForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" required>
+
+    <!-- Add other registration fields as needed -->
+
+    <button type="submit">Register</button>
+  </form>
+
+  <p id="registrationStatus"></p>
+
+  <script>
+    document.getElementById('registrationForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      // Get form values
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Perform data validation here (e.g., password strength check, email format check)
+
+      // You can add code to send the registration data to the back-end here (not implemented for simplicity)
+
+      // Display a success message (for demonstration purposes)
+      document.getElementById('registrationStatus').textContent = `Registration successful for ${username}!`;
+    });
+  </script>
+</body>
+</html>
