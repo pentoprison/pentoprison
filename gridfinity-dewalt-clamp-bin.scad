@@ -1,49 +1,124 @@
 // ============================================================
-// Gridfinity Bin for 2 DeWalt Squeeze Clamps
+// Gridfinity Bin for 2 DeWalt Trigger Clamps (Horizontal)
 // ============================================================
 //
-// A gridfinity-compatible bin with two shaped pockets for
-// DeWalt 6" trigger/squeeze clamps (e.g. DWHT83148, DWHT83192).
-// Clamps sit handle-down with the bar extending upward.
+// Drawer-friendly gridfinity bin for DeWalt trigger clamps
+// from the DWHT83200D 6-piece set (4.5", 6", 12" sizes).
+//
+// Clamps lay flat on their side in individual channels.
+// Default sized for the 6" medium trigger clamps.
+//
+// HOW TO USE:
+//   1. Open in OpenSCAD
+//   2. Select your clamp size from the preset dropdown,
+//      or measure your clamps and enter custom values
+//   3. Render (F6) and export STL (F7)
+//
+// IMPORTANT: Measure your own clamps with calipers and adjust
+// the dimensions below for a perfect fit. The defaults are
+// best-effort estimates for the DWHT83200D set.
 //
 // Gridfinity spec: 42mm grid pitch, 7mm height unit.
-// Designed to print without supports.
+// Prints without supports.
 // ============================================================
 
-/* [Grid Size] */
-// Number of grid units along X
-grid_x = 2; // [1:1:6]
-// Number of grid units along Y
-grid_y = 2; // [1:1:6]
-// Number of height units (7mm each)
-grid_z = 5; // [1:1:10]
+/* [Clamp Size Preset] */
+// Which clamp size from the DWHT83200D set?
+clamp_preset = "6in"; // ["4.5in":4.5 inch Small, "6in":6 inch Medium, "12in":12 inch Large, "custom":Custom]
 
-/* [Clamp Dimensions] */
-// Handle width (mm) - measured across the grip
-clamp_handle_w = 40;
-// Handle depth (mm) - front to back
-clamp_handle_d = 50;
-// Bar width (mm) - the sliding bar cross-section width
-clamp_bar_w = 10;
-// Bar depth (mm) - the sliding bar cross-section depth
-clamp_bar_d = 18;
-// Extra clearance around all clamp features (mm)
-clamp_clearance = 1.5;
+/* [Custom Clamp Dimensions (only used if preset = custom)] */
+// Overall length of clamp when fully closed (mm)
+custom_clamp_length = 290;
+// Handle cross-section height (mm) - the tall dimension of the grip
+custom_handle_height = 90;
+// Handle cross-section width (mm) - the narrow dimension of the grip
+custom_handle_width = 45;
+// Handle length along the clamp axis (mm)
+custom_handle_length = 130;
+// Bar cross-section height (mm)
+custom_bar_height = 16;
+// Bar cross-section width (mm)
+custom_bar_width = 8;
 
 /* [Bin Options] */
 // Wall thickness (mm)
 wall = 2.0;
 // Bottom thickness (mm)
 floor_t = 1.2;
-// Corner chamfer on pockets (mm)
-pocket_chamfer = 3;
-// Enable stacking lip
+// Extra clearance around clamp features (mm)
+clearance = 2.0;
+// Enable stacking lip on top
 stacking_lip = true;
-// Enable scoop in front of each pocket
-enable_scoop = true;
+// Number of clamps to hold
+num_clamps = 2; // [1:1:4]
 
 /* [Hidden] */
 $fn = 48;
+
+// ============================================================
+// Clamp Size Presets (DWHT83200D set)
+// ============================================================
+// Dimensions are estimates - measure yours for best fit!
+//
+// When a trigger clamp lays on its side:
+//   - "height" = the grip profile (trigger to back of handle)
+//   - "width"  = across the handle (the thinner axis)
+//   - "length" = tip-to-tip along the bar
+
+// 4.5" Small Trigger Clamp
+_small_length        = 210;  // overall closed length
+_small_handle_height = 60;   // handle profile height
+_small_handle_width  = 32;   // handle thickness
+_small_handle_length = 100;  // handle portion along bar axis
+_small_bar_height    = 12;   // bar profile height (I-beam)
+_small_bar_width     = 7;    // bar thickness
+
+// 6" Medium Trigger Clamp
+_med_length          = 290;  // overall closed length
+_med_handle_height   = 90;   // handle profile height
+_med_handle_width    = 45;   // handle thickness
+_med_handle_length   = 130;  // handle portion along bar axis
+_med_bar_height      = 16;   // bar profile height
+_med_bar_width       = 8;    // bar thickness
+
+// 12" Large Trigger Clamp (same handle as 6", longer bar)
+_large_length        = 440;  // overall closed length
+_large_handle_height = 90;   // handle profile height
+_large_handle_width  = 45;   // handle thickness
+_large_handle_length = 130;  // handle portion along bar axis
+_large_bar_height    = 16;   // bar profile height
+_large_bar_width     = 8;    // bar thickness
+
+// Select dimensions based on preset
+clamp_length = (clamp_preset == "4.5in") ? _small_length :
+               (clamp_preset == "6in")   ? _med_length :
+               (clamp_preset == "12in")  ? _large_length :
+               custom_clamp_length;
+
+handle_height = (clamp_preset == "4.5in") ? _small_handle_height :
+                (clamp_preset == "6in")   ? _med_handle_height :
+                (clamp_preset == "12in")  ? _large_handle_height :
+                custom_handle_height;
+
+handle_width = (clamp_preset == "4.5in") ? _small_handle_width :
+               (clamp_preset == "6in")   ? _med_handle_width :
+               (clamp_preset == "12in")  ? _large_handle_width :
+               custom_handle_width;
+
+handle_length = (clamp_preset == "4.5in") ? _small_handle_length :
+                (clamp_preset == "6in")   ? _med_handle_length :
+                (clamp_preset == "12in")  ? _large_handle_length :
+                custom_handle_length;
+
+bar_height = (clamp_preset == "4.5in") ? _small_bar_height :
+             (clamp_preset == "6in")   ? _med_bar_height :
+             (clamp_preset == "12in")  ? _large_bar_height :
+             custom_bar_height;
+
+bar_width = (clamp_preset == "4.5in") ? _small_bar_width :
+            (clamp_preset == "6in")   ? _med_bar_width :
+            (clamp_preset == "12in")  ? _large_bar_width :
+            custom_bar_width;
 
 // ============================================================
 // Gridfinity Standard Dimensions
@@ -58,28 +133,35 @@ bp_h2 = 1.8;         // second step height
 bp_h3 = 2.15;        // third step height
 bp_total = bp_h1 + bp_h2 + bp_h3; // 4.75mm
 
-// Stacking lip profile
-lip_h = 4.4;          // stacking lip added height
+// Stacking lip profile height
+lip_h = 4.4;
+
+// Height unit
+unit_height = 7;
 
 // ============================================================
-// Derived Dimensions
+// Auto-calculate Grid Size
 // ============================================================
+// Channel dimensions (clamp on its side + clearance)
+channel_width  = handle_height + 2 * clearance;  // widest part of clamp profile
+channel_length = clamp_length + 2 * clearance;    // full clamp length
+channel_depth  = handle_width + clearance;         // how deep the channel is
+
+// Calculate grid units needed (round up to next whole unit)
+grid_x = ceil(channel_length / gf_pitch);
+grid_y = ceil((num_clamps * channel_width + (num_clamps + 1) * wall) / gf_pitch);
+grid_z = ceil((bp_total + floor_t + channel_depth) / unit_height);
+
+// Outer bin dimensions
 bin_outer_x = grid_x * gf_pitch - 2 * gf_tol;
 bin_outer_y = grid_y * gf_pitch - 2 * gf_tol;
 
-// Total bin height: base profile + usable height + stacking lip
-unit_height = 7;
+// Total heights
 usable_height = grid_z * unit_height;
 total_height = usable_height + (stacking_lip ? lip_h : 0);
 
-// Internal cavity depth (from top of floor to top of bin wall)
+// Internal depth from top of floor
 cavity_depth = usable_height - bp_total - floor_t;
-
-// Pocket dimensions with clearance
-pocket_w = clamp_handle_w + 2 * clamp_clearance;
-pocket_d = clamp_handle_d + 2 * clamp_clearance;
-slot_w   = clamp_bar_w + 2 * clamp_clearance;
-slot_d   = clamp_bar_d + 2 * clamp_clearance;
 
 // ============================================================
 // Modules
@@ -87,13 +169,13 @@ slot_d   = clamp_bar_d + 2 * clamp_clearance;
 
 // Rounded rectangle centered at origin
 module rounded_rect(w, d, h, r) {
+    actual_r = min(r, min(w, d) / 2 - 0.01);
     linear_extrude(h)
-        offset(r = r)
-            square([w - 2*r, d - 2*r], center = true);
+        offset(r = actual_r)
+            square([w - 2 * actual_r, d - 2 * actual_r], center = true);
 }
 
 // Gridfinity base profile for a single grid unit
-// Produces the stair-stepped profile at the base
 module base_profile_unit(x_off, y_off) {
     unit_size = gf_pitch - 2 * gf_tol;
     r0 = gf_corner;
@@ -112,9 +194,8 @@ module base_profile_unit(x_off, y_off) {
         }
 
         // Step 3: top (widest, matches bin wall)
-        translate([0, 0, bp_h1 + bp_h2]) {
+        translate([0, 0, bp_h1 + bp_h2])
             rounded_rect(unit_size, unit_size, bp_h3, r0);
-        }
     }
 }
 
@@ -128,106 +209,64 @@ module base_profile() {
         }
 }
 
-// Stacking lip profile (inverted base profile at the top)
+// Stacking lip (simplified stepped rim at top of bin)
 module stacking_lip_profile() {
     lip_base = usable_height;
+    lip_wall = 1.2;
 
     translate([0, 0, lip_base]) {
-        // The stacking lip mirrors the base profile geometry
-        // so another bin can stack on top
-
-        // Main lip wall (vertical portion)
+        // Outer lip wall
         difference() {
             rounded_rect(bin_outer_x, bin_outer_y, lip_h, gf_corner);
-
-            // Hollow out the inside, leaving just the lip wall
             translate([0, 0, -0.01])
                 rounded_rect(
-                    bin_outer_x - 2 * 1.2,
-                    bin_outer_y - 2 * 1.2,
+                    bin_outer_x - 2 * lip_wall,
+                    bin_outer_y - 2 * lip_wall,
                     lip_h + 0.02,
-                    gf_corner - 1.2
+                    max(0.5, gf_corner - lip_wall)
                 );
-        }
-
-        // Step 1: top ledge (narrowest, at the very top)
-        translate([0, 0, lip_h - bp_h1]) {
-            difference() {
-                r1 = gf_corner - 0.8;
-                s1x = bin_outer_x - 2 * 0.8;
-                s1y = bin_outer_y - 2 * 0.8;
-                rounded_rect(s1x, s1y, bp_h1, r1);
-                translate([0, 0, -0.01])
-                    rounded_rect(
-                        bin_outer_x - 2 * 1.2,
-                        bin_outer_y - 2 * 1.2,
-                        bp_h1 + 0.02,
-                        gf_corner - 1.2
-                    );
-            }
         }
 
         // Step 2: middle ledge
         translate([0, 0, lip_h - bp_h1 - bp_h2]) {
             difference() {
-                r2 = gf_corner - 0.4;
-                s2x = bin_outer_x - 2 * 0.4;
-                s2y = bin_outer_y - 2 * 0.4;
-                rounded_rect(s2x, s2y, bp_h2, r2);
+                rounded_rect(
+                    bin_outer_x - 2 * 0.4,
+                    bin_outer_y - 2 * 0.4,
+                    bp_h2, gf_corner - 0.4
+                );
                 translate([0, 0, -0.01])
                     rounded_rect(
-                        bin_outer_x - 2 * 1.2,
-                        bin_outer_y - 2 * 1.2,
+                        bin_outer_x - 2 * lip_wall,
+                        bin_outer_y - 2 * lip_wall,
                         bp_h2 + 0.02,
-                        gf_corner - 1.2
+                        max(0.5, gf_corner - lip_wall)
+                    );
+            }
+        }
+
+        // Step 1: top ledge (narrowest)
+        translate([0, 0, lip_h - bp_h1]) {
+            difference() {
+                rounded_rect(
+                    bin_outer_x - 2 * 0.8,
+                    bin_outer_y - 2 * 0.8,
+                    bp_h1, gf_corner - 0.8
+                );
+                translate([0, 0, -0.01])
+                    rounded_rect(
+                        bin_outer_x - 2 * lip_wall,
+                        bin_outer_y - 2 * lip_wall,
+                        bp_h1 + 0.02,
+                        max(0.5, gf_corner - lip_wall)
                     );
             }
         }
     }
 }
 
-// A single clamp pocket (handle + bar slot)
-module clamp_pocket() {
-    // Handle pocket - rounded rectangle
-    chamfered_pocket_w = pocket_w;
-    chamfered_pocket_d = pocket_d;
-
-    // Full-depth handle pocket
-    translate([0, 0, -0.01])
-        rounded_rect(
-            chamfered_pocket_w,
-            chamfered_pocket_d,
-            cavity_depth + 0.02,
-            pocket_chamfer
-        );
-
-    // Bar slot - narrower channel extending the full height
-    // This lets the bar slide through even if bin is stacked
-    translate([0, 0, -0.01])
-        rounded_rect(
-            slot_w,
-            slot_d,
-            total_height + 1,
-            min(slot_w, slot_d) / 4
-        );
-}
-
-// Scoop ramp to help grab clamps
-module scoop(pocket_w_local, depth) {
-    scoop_r = depth * 0.7;
-    translate([0, -pocket_w_local/2 + scoop_r * 0.1, 0])
-        rotate([0, 90, 0])
-            translate([0, 0, -pocket_w_local/2])
-                intersection() {
-                    cylinder(r = scoop_r, h = pocket_w_local);
-                    translate([-scoop_r, 0, 0])
-                        cube([scoop_r, scoop_r, pocket_w_local]);
-                }
-}
-
-// Main bin body (outer shell)
+// Main bin body
 module bin_body() {
-    // Main bin walls from top of base profile to full height
     translate([0, 0, bp_total])
         rounded_rect(
             bin_outer_x,
@@ -237,50 +276,79 @@ module bin_body() {
         );
 }
 
+// A single clamp channel (horizontal trough for clamp on its side)
+// The channel has a wider handle section and narrower bar section.
+module clamp_channel() {
+    fillet_r = 2;
+    bar_channel_width = bar_height + 2 * clearance;
+
+    // Handle section: wider rectangular trough on one end
+    translate([-(channel_length / 2) + clearance, 0, 0])
+        rounded_rect(
+            handle_length + clearance,
+            channel_width,
+            cavity_depth + 0.02,
+            fillet_r
+        );
+
+    // Bar section: narrower trough extending the full length
+    rounded_rect(
+        channel_length,
+        bar_channel_width,
+        cavity_depth + 0.02,
+        fillet_r
+    );
+
+    // Tapered transition from handle to bar (for printability)
+    transition_len = 15;
+    translate([-(channel_length / 2) + clearance + handle_length + transition_len / 2, 0, 0])
+        hull() {
+            translate([-transition_len / 2, 0, 0])
+                rounded_rect(0.01, channel_width, cavity_depth + 0.02, fillet_r);
+            translate([transition_len / 2, 0, 0])
+                rounded_rect(0.01, bar_channel_width, cavity_depth + 0.02, fillet_r);
+        }
+}
+
 // ============================================================
 // Assembly
 // ============================================================
 module gridfinity_clamp_bin() {
-    // Spacing between the two clamp pockets
-    pocket_spacing = bin_outer_x / 2;
-    pocket_x1 = -pocket_spacing / 2;
-    pocket_x2 =  pocket_spacing / 2;
+    // Y positions for each clamp channel (evenly spaced)
+    total_channels_width = num_clamps * channel_width;
+    total_gaps = bin_outer_y - 2 * wall - total_channels_width;
+    gap = total_gaps / (num_clamps + 1);
 
-    // Y position: center pockets in the bin
-    pocket_y = 0;
-
-    // Z position: top of floor
+    // Floor Z
     pocket_z = bp_total + floor_t;
 
     difference() {
         union() {
-            // Gridfinity base profile
             base_profile();
-
-            // Bin body
             bin_body();
-
-            // Stacking lip
-            if (stacking_lip) {
+            if (stacking_lip)
                 stacking_lip_profile();
-            }
         }
 
-        // Cut the two clamp pockets
-        for (px = [pocket_x1, pocket_x2]) {
-            translate([px, pocket_y, pocket_z])
-                clamp_pocket();
-        }
-
-        // Scoop cuts for easier clamp removal
-        if (enable_scoop) {
-            for (px = [pocket_x1, pocket_x2]) {
-                translate([px, -bin_outer_y/2 + wall, pocket_z])
-                    scoop(pocket_w, cavity_depth);
-            }
+        // Cut channels for each clamp
+        for (i = [0 : num_clamps - 1]) {
+            cy = -bin_outer_y / 2 + wall + gap + channel_width / 2
+                 + i * (channel_width + gap);
+            translate([0, cy, pocket_z])
+                clamp_channel();
         }
     }
 }
+
+// ============================================================
+// Info echo
+// ============================================================
+echo(str("=== Gridfinity DeWalt Clamp Bin ==="));
+echo(str("Clamp preset: ", clamp_preset));
+echo(str("Grid size: ", grid_x, " x ", grid_y, " (", bin_outer_x, "mm x ", bin_outer_y, "mm)"));
+echo(str("Height: ", grid_z, " units (", usable_height, "mm", stacking_lip ? str(" + ", lip_h, "mm lip") : "", ")"));
+echo(str("Channel: ", channel_length, "mm long x ", channel_width, "mm wide x ", cavity_depth, "mm deep"));
+echo(str("Holds: ", num_clamps, " clamp(s) laying flat"));
 
 // ============================================================
 // Render
